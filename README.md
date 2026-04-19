@@ -42,3 +42,5 @@
                 <input type="text" id="name" name="name" required><br><br>
 <label for="email">Email:</label><br>
                 <input type="email" id="email" name="email" required><br><br>
+<label for="message">Message:</label><br>
+                <textarea id="message" name="message" required></textarea><br><br>
