@@ -23,3 +23,5 @@
 <hr>
 <section id="team">
             <h2>Meet the Team</h2>
+<article>
+                <h3>Yash Oberoi</h3>
