@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern HTML5 APIs Demo</title>
+  <style>
+    /* Modern CSS Reset & Background */
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #000000 0%, #000000 100%);
+      color: #ffffff;
+    }
+
+    h1 { 
+        text-align: center; 
+        font-weight: 300; 
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #b2bec3;
+        margin-bottom: 40px;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    /* Glassmorphism Card Design */
+    .card {
+      background: rgba(214, 17, 17, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 { 
+      color: #002658; 
+      font-size: 1.4rem; 
+      margin-top: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+    }
+    
+    /* 1. Drag & Drop Stylings */
+    #dropzone {
+      border: 2px dashed #00d2ff;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 12px;
+      margin: 15px 0;
+      background: rgba(0, 210, 255, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #dropzone.dragover {
+      background: rgba(0, 210, 255, 0.2);
+      transform: scale(1.02);
+      border-style: solid;
+    }
+    .draggable {
+      padding: 12px;
+      margin: 5px;
+      background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+      color: white;
+      border-radius: 8px;
+      cursor: grab;
+      display: inline-block;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+    }
+    .draggable:active { cursor: grabbing; }
+
+    /* 2. Geolocation & 3. Storage Stylings */
+    #locationResult, .stored-data {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 15px;
+      border-left: 4px solid #00d2ff;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Form Elements */
+    input { 
+      padding: 12px; 
+      width: 100%; 
+      margin: 10px 0; 
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(175, 175, 175, 0.1);
+      color: white;
+      outline: none;
+    }
+    input::placeholder { color: #aaa; }
+
+    .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      background: #00b894;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover { 
+        filter: brightness(1.2); 
+        transform: translateY(-2px);
+    }
+    button.secondary { background: #d63031; }
+
+    #droppedList div {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>HTML5 APIs EXPLORER</h1>
+  <h2>Practical no. 11</h2>
+  <h2>USN = CS25128</h2>
+  <p class="subtitle">Engineering Demo: Interactive Web Features</p>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>Drag & Drop API</h2>
+      <p>Move assets into the landing zone:</p>
+      
+      <div style="margin-bottom: 15px;">
+        <div class="draggable" draggable="true" id="item1">📱 Mobile</div>
+        <div class="draggable" draggable="true" id="item2">💻 Laptop</div>
+        <div class="draggable" draggable="true" id="item3">🎒 Device</div>
+      </div>
+
+      <div id="dropzone">Drop items here...</div>
+
+      <div id="droppedList"></div>
+    </div>
+
+    <div class="card">
+      <h2>Geolocation API</h2>
+      <p>Retrieve real-time GPS coordinates:</p>
+      <button onclick="getLocation()">📍 Initialize Tracking</button>
+      
+      <div id="locationResult">
+        <p style="color: #636e72;">System idle. Awaiting user input...</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Web Storage</h2>
+      <p>Persistent client-side data (localStorage):</p>
+      <input type="text" id="userName" placeholder="Type name to store...">
+      
+      <div class="btn-group">
+        <button onclick="saveName()">Save Data</button>
+        <button class="secondary" onclick="clearStorage()">Clear</button>
+      </div>
+
+      <div class="stored-data">
+        <span id="displayName">No local session detected.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Logic remains identical to ensure functionality is preserved
+    const dropzone = document.getElementById('dropzone');
+    const droppedList = document.getElementById('droppedList');
+
+    document.querySelectorAll('.draggable').forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', item.innerHTML);
+      });
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      const data = e.dataTransfer.getData('text/plain');
+      const li = document.createElement('div');
+      li.style.margin = '8px 0';
+      li.style.padding = '10px';
+      li.style.background = 'rgba(0, 184, 148, 0.2)';
+      li.style.border = '1px solid #00b894';
+      li.style.borderRadius = '6px';
+      li.innerHTML = `📦 <b>Received:</b> ${data}`;
+      droppedList.prepend(li);
+    });
+
+    function getLocation() {
+      const result = document.getElementById('locationResult');
+      if (navigator.geolocation) {
+        result.innerHTML = "<p>🛰️ Pinged Satellite... Waiting for response.</p>";
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            result.innerHTML = `
+              <strong style="color:#00d2ff">✅ POSITION ACQUIRED</strong><br>
+              Lat: ${position.coords.latitude.toFixed(4)}<br>
+              Lon: ${position.coords.longitude.toFixed(4)}<br>
+              Acc: ${position.coords.accuracy.toFixed(0)}m
+            `;
+          },
+          (error) => { result.innerHTML = `❌ Access Denied: ${error.message}`; }
+        );
+      }
+    }
+
+    function saveName() {
+      const name = document.getElementById('userName').value.trim();
+      if (!name) return alert("Field empty!");
+      localStorage.setItem('studentName', name);
+      displaySavedName();
+    }
+
+    function displaySavedName() {
+      const saved = localStorage.getItem('studentName');
+      document.getElementById('displayName').innerHTML = 
+        saved ? `👤 Active User: <strong>${saved}</strong>` : "No data saved yet";
+    }
+
+    function clearStorage() {
+      localStorage.clear();
+      displaySavedName();
+    }
+
+    window.onload = displaySavedName;
+  </script>
+
+</body>
+</html>
+
