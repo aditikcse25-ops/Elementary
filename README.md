@@ -44,3 +44,7 @@
                 <input type="email" id="email" name="email" required><br><br>
 <label for="message">Message:</label><br>
                 <textarea id="message" name="message" required></textarea><br><br>
+<button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
