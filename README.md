@@ -20,3 +20,6 @@
 <p>We provide the most precise tools for your industrial needs.</p>
             <button type="button">See Our Products</button>
         </section>
+<hr>
+<section id="team">
+            <h2>Meet the Team</h2>
