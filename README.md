@@ -28,3 +28,6 @@
 <p>Chief Executive Officer</p>
                 <p>Specializing in strategic industrial growth and sustainable manufacturing operations.</p>
             </article>
+<article>
+                <h3>Rishabh Bajaj</h3>
+                <p>Director of Engineering</p>
