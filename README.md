@@ -17,3 +17,6 @@
 <main>
         <section id="home">
             <h2>Quality Manufacturing You Can Trust</h2>
+<p>We provide the most precise tools for your industrial needs.</p>
+            <button type="button">See Our Products</button>
+        </section>
