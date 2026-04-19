@@ -14,3 +14,6 @@
             </ul>
 </nav>
     </header>
+<main>
+        <section id="home">
+            <h2>Quality Manufacturing You Can Trust</h2>
