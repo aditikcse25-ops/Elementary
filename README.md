@@ -31,3 +31,6 @@
 <article>
                 <h3>Rishabh Bajaj</h3>
                 <p>Director of Engineering</p>
+<p>Expert in aerospace-grade tool design with a focus on structural integrity.</p>
+            </article>
+        </section>
