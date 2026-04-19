@@ -34,3 +34,6 @@
 <p>Expert in aerospace-grade tool design with a focus on structural integrity.</p>
             </article>
         </section>
+<hr>
+<section id="contact">
+            <h2>Contact Us</h2>
