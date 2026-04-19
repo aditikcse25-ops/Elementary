@@ -37,3 +37,6 @@
 <hr>
 <section id="contact">
             <h2>Contact Us</h2>
+<form action="#">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
